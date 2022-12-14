@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+/* Grouping all the routes together. */
 Route::prefix('v1/clients')->group(function () {
     //Clients routers
     Route::get('', [ClientsController::class, 'index']);
@@ -26,6 +27,7 @@ Route::prefix('v1/clients')->group(function () {
     Route::delete('/{id}', [ClientsController::class, 'destroy']);
 });
 
+/* Grouping all the routes together. */
 Route::prefix('v1/events')->group(function () {
     //Event routers
     Route::get('', [EventsController::class, 'index']);
@@ -36,9 +38,9 @@ Route::prefix('v1/events')->group(function () {
 });
 
 
+/* A way to group routes together. */
 Route::prefix('v1/tickets')->group(function () {
     //Tickets routers
     Route::post('', [TicketController::class, 'store']);
-    Route::delete('/{id}', [TicketController::class, 'destroy']);
 });
 

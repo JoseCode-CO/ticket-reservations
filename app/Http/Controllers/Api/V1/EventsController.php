@@ -17,6 +17,7 @@ class EventsController extends Controller
      */
     public function index()
     {
+      /* Returning all the data from the database. */
         $data = Event::all();
 
         return new EventCollection($data);

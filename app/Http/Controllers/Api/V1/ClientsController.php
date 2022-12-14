@@ -19,12 +19,9 @@ class ClientsController extends Controller
      */
     public function index()
     {
-        try {
-            $data = Client::all();
-            return new ClientCollection($data);
-        } catch (Exception $e) {
-            echo 'Excepción: ',  $e->getMessage(), "\n";
-        }
+       /* Returning all the clients in the database. */
+        $data = Client::all();
+        return new ClientCollection($data);
     }
 
     /**
@@ -35,6 +32,7 @@ class ClientsController extends Controller
      */
     public function store(ClientRequest $request)
     {
+        /* Creating a new client and saving it to the database. */
         $client = new Client();
         $client->name = $request->name;
         $client->lastname = $request->lastname;
@@ -55,6 +53,8 @@ class ClientsController extends Controller
      */
     public function show($id)
     {
+        /* Looking for a client with the id that is passed as a parameter. If it finds it, it returns the
+      client. If it doesn't find it, it returns a response with a message. */
         $client = Client::find($id);
         if (!is_null($client)) {
             return new ClientResources(Client::find($id));
@@ -72,6 +72,9 @@ class ClientsController extends Controller
      */
     public function update(Request $request, $id)
     {
+        /* Looking for a client with the id that is passed as a parameter. If it finds it, it returns
+       the
+       client. If it doesn't find it, it returns a response with a message. */
         $client = Client::find($id);
         if (!is_null($client)) {
 
@@ -96,6 +99,7 @@ class ClientsController extends Controller
      */
     public function destroy($id)
     {
+        /* Deleting the client with the id that is passed as a parameter. */
         Client::destroy($id);
         return response('Eliminado exitosamente', 200);
     }
