@@ -3,6 +3,10 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ClientRequest;
+use App\Http\Resources\V1\ClientCollection;
+use App\Http\Resources\V1\ClientResources;
+use App\Models\Client;
 use Illuminate\Http\Request;
 
 class ClientsController extends Controller
@@ -14,17 +18,9 @@ class ClientsController extends Controller
      */
     public function index()
     {
-        //
-    }
+        $data = Client::all();
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return new ClientCollection($data);
     }
 
     /**
@@ -33,9 +29,18 @@ class ClientsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ClientRequest $request)
     {
-        //
+        $client = new Client();
+        $client->name = $request->name;
+        $client->lastname = $request->lastname;
+        $client->telephone = $request->telephone;
+        $client->direction = $request->direction;
+        $client->identy_document = $request->identy_document;
+        $client->email = $request->email;
+        $client->save();
+
+        return response('Guardado exitosamente', 200);
     }
 
     /**
@@ -46,18 +51,12 @@ class ClientsController extends Controller
      */
     public function show($id)
     {
-        //
-    }
+        $client = Client::find($id);
+        if (!is_null($client)) {
+            return new ClientResources(Client::find($id));
+        }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return response('No se encontró el cliente', 500);
     }
 
     /**
@@ -69,7 +68,20 @@ class ClientsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $client = Client::find($id);
+        if (!is_null($client)) {
+
+            $client->name = $request->name;
+            $client->lastname = $request->lastname;
+            $client->telephone = $request->telephone;
+            $client->direction = $request->direction;
+            $client->identy_document = $request->identy_document;
+            $client->email = $request->email;
+            $client->save();
+
+            return response('Editado exitosamente', 200);
+        }
+        return response('No se encontró el cliente', 500);
     }
 
     /**
@@ -80,6 +92,7 @@ class ClientsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Client::destroy($id);
+        return response('Eliminado exitosamente', 200);
     }
 }

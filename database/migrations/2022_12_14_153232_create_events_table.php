@@ -22,7 +22,6 @@ class CreateEventsTable extends Migration
             $table->integer('number_tickets');
             $table->integer('number_tickets_availables')->nullable();
             $table->integer('number_tickets_unavailable')->nullable();
-            //fecha
             $table->timestamps();
         });
     }

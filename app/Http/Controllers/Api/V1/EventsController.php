@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\V1\EventCollection;
+use App\Http\Resources\V1\EventResources;
+use App\Models\Event;
 use Illuminate\Http\Request;
 
 class EventsController extends Controller
@@ -14,17 +17,9 @@ class EventsController extends Controller
      */
     public function index()
     {
-        //
-    }
+        $data = Event::all();
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return new EventCollection($data);
     }
 
     /**
@@ -35,7 +30,17 @@ class EventsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $event = new Event();
+        $event->name_event = $request->name_event;
+        $event->description = $request->description;
+        $event->category = $request->category;
+        $event->unit_price = $request->unit_price;
+        $event->number_tickets = $request->number_tickets;
+        $event->number_tickets_availables = $request->number_tickets_availables;
+        $event->number_tickets_unavailable = $request->number_tickets_unavailable;
+        $event->save();
+
+        return response('Guardado exitosamente', 200);
     }
 
     /**
@@ -46,18 +51,12 @@ class EventsController extends Controller
      */
     public function show($id)
     {
-        //
-    }
+        $event = Event::find($id);
+        if (!is_null($event)) {
+            return new EventResources(Event::find($id));
+        }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return response('No se encontró el evento', 500);
     }
 
     /**
@@ -69,7 +68,21 @@ class EventsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $event = Event::find($id);
+        if (!is_null($event)) {
+
+            $event->name_event = $request->name_event;
+            $event->description = $request->description;
+            $event->category = $request->category;
+            $event->unit_price = $request->unit_price;
+            $event->number_tickets = $request->number_tickets;
+            $event->number_tickets_availables = $request->number_tickets_availables;
+            $event->number_tickets_unavailable = $request->number_tickets_unavailable;
+            $event->save();
+
+            return response('Editado exitosamente', 200);
+        }
+        return response('No se encontró el evento', 500);
     }
 
     /**
@@ -80,6 +93,7 @@ class EventsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Event::destroy($id);
+        return response('Eliminado exitosamente', 200);
     }
 }

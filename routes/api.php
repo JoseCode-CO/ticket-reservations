@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\V1\ClientsController;
+use App\Http\Controllers\Api\V1\EventsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +16,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::prefix('v1/clients')->group(function () {
+    //Clients routers
+    Route::get('', [ClientsController::class, 'index']);
+    Route::get('/{id}', [ClientsController::class, 'show']);
+    Route::post('', [ClientsController::class, 'store']);
+    Route::put('/{id}', [ClientsController::class, 'update']);
+    Route::delete('/{id}', [ClientsController::class, 'destroy']);
 });
+
+Route::prefix('v1/events')->group(function () {
+    //Clients routers
+    Route::get('', [EventsController::class, 'index']);
+    Route::get('/{id}', [EventsController::class, 'show']);
+    Route::post('', [EventsController::class, 'store']);
+    Route::put('/{id}', [EventsController::class, 'update']);
+    Route::delete('/{id}', [EventsController::class, 'destroy']);
+});
+
