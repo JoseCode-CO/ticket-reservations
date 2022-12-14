@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use Exception;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ClientRequest;
 use App\Http\Resources\V1\ClientCollection;
@@ -18,9 +19,12 @@ class ClientsController extends Controller
      */
     public function index()
     {
-        $data = Client::all();
-
-        return new ClientCollection($data);
+        try {
+            $data = Client::all();
+            return new ClientCollection($data);
+        } catch (Exception $e) {
+            echo 'Excepción: ',  $e->getMessage(), "\n";
+        }
     }
 
     /**
