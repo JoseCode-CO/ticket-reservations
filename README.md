@@ -2,6 +2,8 @@
  Funcionamiento: Clonar respositorio front y instalar despendencias https://github.com/JoseCode-CO/front-tickets.git, luego clonar respositorio back https://github.com/JoseCode-CO/ticket-reservations.git, configurar .env, guardar el proyecto (Back) en la carpeta de su servidor, luego ejecutar migraciones y seeder: 
 php artisan migrate:fresh --seed
 
+IMPORTANTE *Cuando se ejecute el proyecto del front ir a esta ruta http://localhost:3000/home*
+
 Rutas cliente:
 Los clientes en esta aplicacion vendrian siendo los usuarios los cuales se le asignará un tickets 
 
@@ -149,3 +151,6 @@ body: {
 }
 
 Response: Guardado exitosamente
+
+
+Link explicacion : https://drive.google.com/file/d/1AT5Lfx0WSHgw6GpZ_5ujWfzull4mtirP/view?usp=sharing 
