@@ -20,8 +20,9 @@ class CreateEventsTable extends Migration
             $table->string('category');
             $table->integer('unit_price');
             $table->integer('number_tickets');
-            $table->integer('number_tickets_availables');
-            $table->integer('number_tickets_unavailable');
+            $table->integer('number_tickets_availables')->nullable();
+            $table->integer('number_tickets_unavailable')->nullable();
+            //fecha
             $table->timestamps();
         });
     }
